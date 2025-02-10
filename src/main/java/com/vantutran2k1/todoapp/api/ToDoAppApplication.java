@@ -1,4 +1,4 @@
-package com.vantutran2k1.todoapp;
+package com.vantutran2k1.todoapp.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
