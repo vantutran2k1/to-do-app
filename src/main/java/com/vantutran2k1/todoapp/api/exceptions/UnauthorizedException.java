@@ -1,0 +1,7 @@
+package com.vantutran2k1.todoapp.api.exceptions;
+
+public class UnauthorizedException extends RuntimeException {
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}

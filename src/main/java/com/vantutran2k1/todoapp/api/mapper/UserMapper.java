@@ -8,4 +8,6 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
     CacheUserDto toCacheUserDto(User user);
+
+    User toUser(CacheUserDto user);
 }

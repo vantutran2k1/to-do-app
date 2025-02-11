@@ -19,4 +19,10 @@ public class CacheServiceImpl implements CacheService {
         String key = RedisConstants.AUTH_TOKEN + ":" + token;
         redisTemplate.opsForValue().set(key, user, Duration.ofSeconds(expiresIn));
     }
+
+    @Override
+    public CacheUserDto getUser(String token) {
+        String key = RedisConstants.AUTH_TOKEN + ":" + token;
+        return (CacheUserDto) redisTemplate.opsForValue().get(key);
+    }
 }
