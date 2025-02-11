@@ -1,5 +1,6 @@
 package com.vantutran2k1.todoapp.api.payloads;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vantutran2k1.todoapp.api.constants.TaskStatus;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class CreateTaskResponse {
     @JsonProperty(value = "title")
     private String title;

@@ -1,5 +1,6 @@
 package com.vantutran2k1.todoapp.api.controllers;
 
+import com.vantutran2k1.todoapp.api.payloads.ApiResponse;
 import com.vantutran2k1.todoapp.api.payloads.CreateUserRequest;
 import com.vantutran2k1.todoapp.api.payloads.LoginUserRequest;
 import com.vantutran2k1.todoapp.api.payloads.LoginUserResponse;
@@ -23,13 +24,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<ApiResponse<String>> register(@RequestBody @Valid CreateUserRequest request) {
         userService.registerUser(request);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(new ApiResponse<>("User registered successfully"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginUserResponse> login(@RequestBody @Valid LoginUserRequest request) {
-        return ResponseEntity.ok(userService.loginUser(request));
+    public ResponseEntity<ApiResponse<LoginUserResponse>> login(@RequestBody @Valid LoginUserRequest request) {
+        return ResponseEntity.ok(new ApiResponse<>(userService.loginUser(request)));
     }
 }

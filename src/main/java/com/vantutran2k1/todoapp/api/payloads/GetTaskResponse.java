@@ -1,9 +1,11 @@
 package com.vantutran2k1.todoapp.api.payloads;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class GetTaskResponse {
     @JsonProperty("id")
     private Long id;

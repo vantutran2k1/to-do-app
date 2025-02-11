@@ -1,5 +1,6 @@
 package com.vantutran2k1.todoapp.api.controllers;
 
+import com.vantutran2k1.todoapp.api.payloads.ApiResponse;
 import com.vantutran2k1.todoapp.api.payloads.CreateTaskRequest;
 import com.vantutran2k1.todoapp.api.payloads.CreateTaskResponse;
 import com.vantutran2k1.todoapp.api.payloads.GetTaskResponse;
@@ -22,15 +23,15 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GetTaskResponse>> getTasks(@RequestParam("user_id") Long userId) {
-        return ResponseEntity.ok(taskService.getTasks(userId));
+    public ResponseEntity<ApiResponse<List<GetTaskResponse>>> getTasks(@RequestParam("user_id") Long userId) {
+        return ResponseEntity.ok(new ApiResponse<>(taskService.getTasks(userId)));
     }
 
     @PostMapping
-    public ResponseEntity<CreateTaskResponse> createTask(
+    public ResponseEntity<ApiResponse<CreateTaskResponse>> createTask(
             @RequestHeader(value = "Authorization") String token,
             @RequestBody CreateTaskRequest request
     ) {
-        return new ResponseEntity<>(taskService.createTask(token, request), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ApiResponse<>(taskService.createTask(token, request)), HttpStatus.CREATED);
     }
 }

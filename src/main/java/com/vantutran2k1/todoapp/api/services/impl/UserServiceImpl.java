@@ -1,5 +1,6 @@
 package com.vantutran2k1.todoapp.api.services.impl;
 
+import com.vantutran2k1.todoapp.api.exceptions.UnauthorizedException;
 import com.vantutran2k1.todoapp.api.exceptions.UserExistException;
 import com.vantutran2k1.todoapp.api.mapper.UserMapper;
 import com.vantutran2k1.todoapp.api.models.User;
@@ -10,7 +11,6 @@ import com.vantutran2k1.todoapp.api.repositories.UserRepository;
 import com.vantutran2k1.todoapp.api.services.CacheService;
 import com.vantutran2k1.todoapp.api.services.LoginTokenService;
 import com.vantutran2k1.todoapp.api.services.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public LoginUserResponse loginUser(LoginUserRequest request) {
         var optUser = userRepository.findByUsername(request.getUsername());
         if (optUser.isEmpty() || !optUser.get().getPassword().equals(request.getPassword())) {
-            throw new EntityNotFoundException("Invalid username or password");
+            throw new UnauthorizedException("Invalid username or password");
         }
 
         var user = optUser.get();
