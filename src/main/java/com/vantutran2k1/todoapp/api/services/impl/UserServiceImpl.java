@@ -1,11 +1,13 @@
 package com.vantutran2k1.todoapp.api.services.impl;
 
 import com.vantutran2k1.todoapp.api.exceptions.UserExistException;
+import com.vantutran2k1.todoapp.api.mapper.UserMapper;
 import com.vantutran2k1.todoapp.api.models.User;
 import com.vantutran2k1.todoapp.api.payloads.CreateUserRequest;
 import com.vantutran2k1.todoapp.api.payloads.LoginUserRequest;
 import com.vantutran2k1.todoapp.api.payloads.LoginUserResponse;
 import com.vantutran2k1.todoapp.api.repositories.UserRepository;
+import com.vantutran2k1.todoapp.api.services.CacheService;
 import com.vantutran2k1.todoapp.api.services.LoginTokenService;
 import com.vantutran2k1.todoapp.api.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final LoginTokenService loginTokenService;
+    private final CacheService cacheService;
+    private final UserMapper userMapper;
 
     @Override
     public User registerUser(CreateUserRequest request) {
@@ -42,6 +46,10 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("Invalid username or password");
         }
 
-        return LoginUserResponse.builder().token(loginTokenService.generateToken(optUser.get())).build();
+        var user = optUser.get();
+        var token = loginTokenService.generateToken(user);
+        cacheService.storeLoginToken(userMapper.toCacheUserDto(user), token, 3600);
+
+        return LoginUserResponse.builder().token(token).build();
     }
 }
