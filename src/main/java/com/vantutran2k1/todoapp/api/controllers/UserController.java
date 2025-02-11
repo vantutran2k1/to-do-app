@@ -1,6 +1,8 @@
 package com.vantutran2k1.todoapp.api.controllers;
 
 import com.vantutran2k1.todoapp.api.payloads.CreateUserRequest;
+import com.vantutran2k1.todoapp.api.payloads.LoginUserRequest;
+import com.vantutran2k1.todoapp.api.payloads.LoginUserResponse;
 import com.vantutran2k1.todoapp.api.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid CreateUserRequest user) {
-        userService.registerUser(user);
+    public ResponseEntity<String> register(@RequestBody @Valid CreateUserRequest request) {
+        userService.registerUser(request);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginUserResponse> login(@RequestBody @Valid LoginUserRequest request) {
+        return ResponseEntity.ok(userService.loginUser(request));
     }
 }

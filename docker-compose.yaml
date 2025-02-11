@@ -11,5 +11,19 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7.4.0-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis/data
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_DATABASE=${REDIS_DATABASE:-0}
+
 volumes:
   postgres_data:
+  redis_data:
